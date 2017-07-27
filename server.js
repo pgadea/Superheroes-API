@@ -12,6 +12,18 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
+// GET SINGLE HERO
+app.get('/api/:hero_id', (req,res) => {
+  Superhero.findById(req.params.hero_id, (err, superhero) => {
+    if(err){
+      res.json({message: err, data: null})
+    }
+    else{
+      res.json({message: `Successfully retrieved hero: ${superhero.name}`, data: superhero})
+    }
+  })
+})
+
 // GET ALL Superheroes
 app.get('/api', (req,res) => {
   Superhero.find((err, superheroes) => {
