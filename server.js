@@ -44,10 +44,8 @@ app.post('/api', (req, res) => {
   // CREATE a new hero via Superhero constructor
   let newHero = new Superhero()
 
-  newHero.name = req.body.name
-  newHero.superpower = req.body.superpower
-  newHero.image = req.body.image
-
+  newHero.loadData(req.body)
+  newHero.setMetaDates()
   newHero.save((err, newHero) => {
     if(err){
       res.json({message: err, data: null})
@@ -65,10 +63,8 @@ app.put('/api/:hero_id', (req,res) => {
   Superhero.findById(req.params.hero_id, (err, superhero) => {
 
     // If new data then change value, else keep the same
-    superhero.name = (req.body.name) ? req.body.name : superhero.name
-    superhero.superpower = (req.body.superhero) ? req.body.superhero : superhero.superpower
-    superhero.image = (req.body.image) ? req.body.image : superhero.image
-
+    superhero.loadData(req.body)
+    superhero.setMetaDates()
     superhero.save((err, superhero) => {
       if(err){
         res.json({message: `Successfully updated hero: ${superhero.name}`, data: superhero})
